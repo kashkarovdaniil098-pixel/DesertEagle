@@ -1,0 +1,27 @@
+name: Build Desert Eagle
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Build
+        run: dotnet build DesertEagle.csproj -c Release
+
+      - name: Upload DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: DesertEagle
+          path: bin/Release/net6.0/
