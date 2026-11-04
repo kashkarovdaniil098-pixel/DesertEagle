@@ -7,17 +7,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-dotnet@v4
+    steps:
+      - name: Download source
+        uses: actions/checkout@v4
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 6.0.x
 
       - name: Build mod
-        run: dotnet build DesertEagle.csproj -c Release
+        run: dotnet build DesertEagle.csproj --configuration Release
 
-      - uses: actions/upload-artifact@v4
+      - name: Save DLL
+        uses: actions/upload-artifact@v4
         with:
           name: DesertEagle
           path: bin/Release/net6.0/
